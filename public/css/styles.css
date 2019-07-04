@@ -1,0 +1,49 @@
+body{
+  margin: 1%;
+}
+
+h1{
+  text-align: center;
+}
+
+.textarea{
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  border: solid 1px black;
+}
+
+.container-whole{
+  display:flex;
+}
+
+.halfBox-1{
+  flex:3;
+  display: flex;
+}
+
+.halfBox-2{
+  flex:2;
+}
+
+.box-1{
+  flex:2;
+}
+
+.box-2{
+  flex:1;
+}
+
+.button{
+  font-size: 30px;
+}
+
+.format{
+  position: relative;
+  margin: 100% 30% 40% 35%;
+}
+
+.reset{
+  position: relative;
+  margin: -30% 10% 100% 37%;
+}
