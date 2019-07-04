@@ -25,6 +25,7 @@ app.get("/", function(req, res) {
 
 app.post("/format", function(req, res) {
 
+  formattedContent.length = 0;
   content = req.body.postBody;
 
   var result = content.split(/\r?\n/);
