@@ -18,6 +18,22 @@ app.use(express.static("public"));
 app.get("/", function(req, res) {
 
   res.render("home", {
+    Content: "",
+    FormattedContent: "",
+  });
+});
+
+app.get("/formatted", function(req, res){
+
+res.render("home", {
+  Content: content,
+  FormattedContent: returnContent(formattedContent),
+});
+});
+
+app.get("/", function(req, res) {
+
+  res.render("home", {
     Content: content === null ? "" : content,
     FormattedContent: formattedContent === null ? "" : returnContent(formattedContent),
   });
@@ -55,13 +71,10 @@ app.post("/format", function(req, res) {
     formattedContent.push(splitValues);
   });
 
-  res.redirect("/");
+  res.redirect("/formatted");
 });
 
 app.post("/reset", function(req, res) {
-  content = null;
-
-  formattedContent.length = 0;
   res.redirect("/");
 });
 
