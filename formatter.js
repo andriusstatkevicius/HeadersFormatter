@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
-var content;
+var content = null;
 const formattedContent = [];
 
 app.set('view engine', 'ejs');
