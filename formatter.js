@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
-var content = null;
+var content;
 const formattedContent = [];
 
 app.set('view engine', 'ejs');
@@ -23,19 +23,11 @@ app.get("/", function(req, res) {
   });
 });
 
-app.get("/formatted", function(req, res){
-
-res.render("home", {
-  Content: content,
-  FormattedContent: returnContent(formattedContent),
-});
-});
-
-app.get("/", function(req, res) {
+app.get("/formatted", function(req, res) {
 
   res.render("home", {
-    Content: content === null ? "" : content,
-    FormattedContent: formattedContent === null ? "" : returnContent(formattedContent),
+    Content: content,
+    FormattedContent: returnContent(formattedContent),
   });
 });
 
@@ -46,32 +38,30 @@ app.post("/format", function(req, res) {
 
   var result = content.split(/\r?\n/);
 
-  result.forEach(function(element) {
+  if (result[0] !== "") {
 
-    var splitValues = [];
+    result.forEach(function(element) {
 
-    if (!element.includes(":")) {
-      return;
-    }
+      var splitValues = [];
 
-    if (element.toLowerCase().includes("referer") || element.toLowerCase().includes("origin")) {
-      var temp = element.split(":");
+      if (!element.includes(":")) {
+        return;
+      }
+
+      var temp = element.split(/:(.+)/);
       var key = temp[0];
-      var value = temp.slice(1).join(":");
+      var value = temp[1];
+
       splitValues.push(key);
       splitValues.push(value);
-    } else {
-      splitValues = element.split(":", 2);
-    }
 
-    if (splitValues.length != 2) {
-      return;
-    }
+      formattedContent.push(splitValues);
+    });
 
-    formattedContent.push(splitValues);
-  });
-
-  res.redirect("/formatted");
+    res.redirect("/formatted");
+  } else {
+    res.redirect("/");
+  }
 });
 
 app.post("/reset", function(req, res) {
