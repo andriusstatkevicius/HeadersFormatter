@@ -38,7 +38,7 @@ app.post("/format", function(req, res) {
       return;
     }
 
-    if (element.toLowerCase().includes("referer")) {
+    if (element.toLowerCase().includes("referer") || element.toLowerCase().includes("origin")) {
       var temp = element.split(":");
       var key = temp[0];
       var value = temp.slice(1).join(":");
